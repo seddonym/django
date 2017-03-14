@@ -16,7 +16,7 @@ from django.forms.utils import ErrorList
 from django.forms.widgets import (
     HiddenInput, MultipleHiddenInput, SelectMultiple,
 )
-from django.forms.signals import post_save
+from django.forms import signals
 from django.utils.encoding import force_text
 from django.utils.text import capfirst, get_text_list
 from django.utils.translation import gettext, gettext_lazy as _
@@ -1143,7 +1143,7 @@ class ModelChoiceField(ChoiceField):
         Field.__init__(self, required, widget, label, initial, help_text,
                        *args, **kwargs)
         self.queryset = queryset
-        self.limit_choices_to = limit_choices_to   # limit the queryset later.
+        self.limit_choices_to = limit_choices_to  # limit the queryset later.
         self.to_field_name = to_field_name
 
     def get_limit_choices_to(self):
