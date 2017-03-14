@@ -16,6 +16,7 @@ from django.forms.utils import ErrorList
 from django.forms.widgets import (
     HiddenInput, MultipleHiddenInput, SelectMultiple,
 )
+from django.forms.signals import post_save
 from django.utils.encoding import force_text
 from django.utils.text import capfirst, get_text_list
 from django.utils.translation import gettext, gettext_lazy as _
@@ -449,6 +450,9 @@ class BaseModelForm(BaseForm):
             # If not committing, add a method to the form to allow deferred
             # saving of m2m data.
             self.save_m2m = self._save_m2m
+
+        signals.post_save.send(sender=self.__class__, form=self)
+
         return self.instance
 
     save.alters_data = True
